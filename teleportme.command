@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Teleportme - An automated always-on FaceTime portal.
 # http://papercutsoftware.github.io/teleportme/
@@ -13,6 +13,10 @@
 # Decription: 
 #   This script automates FaceTime calls between two endpoints
 #   (e.g. offices) during selected time of the day.
+#
+# Important: Make sure that the terminal program you use
+#     e.g. iTerm2, has permission to control your computer
+#     under Security and Privacy preferences
 #
 ############################################################
 
@@ -41,29 +45,30 @@ OPEN_UTC_DAYS_OF_WEEK="1 2 3 4 5"   # 0 (Sun) to 6 (Sat)
 # on Github!
 #
 
-SCRIPT_NAME=`basename "$0"`
-SCRIPT_DIR_NAME=`dirname "$0"`
+SCRIPT_NAME=$(basename "$0")
+SCRIPT_DIR_NAME=$(dirname "$0")
 
 usage() {
     echo "${SCRIPT_NAME} [caller|receiver] [alltime]"
+    exit 1
 }
 
 
 log() {
-    date_time=`date "+%Y-%m-%d %T"`
-    echo "${date_time} - $1"
+    date_time=$(date -u "+%Y-%m-%d %T") # Make log messages have identical times
+    echo "${date_time} - $1"            # across machines
 }
 
 
-is_portal_open_now() {
-    day_of_week=`date -u '+%w'`
-    hour_of_day=`date -u '+%H'`
+its_portal_opening_hours() {
+    day_of_week=$(date -u '+%w')
+    hour_of_day=$(date -u '+%H')
 
-    if [[ ! $OPEN_UTC_DAYS_OF_WEEK == *${day_of_week}* ]]; then 
+    if [[ $OPEN_UTC_DAYS_OF_WEEK != *${day_of_week}* ]]; then 
         return 1 #false
     fi
 
-    if [[ ! $OPEN_UTC_HOURS == *${hour_of_day}* ]]; then 
+    if [[ $OPEN_UTC_HOURS != *${hour_of_day}* ]]; then 
         return 1 #false
     fi
     return 0 #true
@@ -74,7 +79,7 @@ make_facetime_call() {
     open facetime://${1}
     for i in 1 2; do
         sleep 3
-        osascript - << EOF
+        osascript - << 'EOF'
             tell application "FaceTime" to activate
             tell application "System Events"
                 keystroke return
@@ -92,7 +97,7 @@ open_facetime() {
 make_fullscreen() {
 
     # Make full screen if not already
-    osascript - << EOF
+    osascript - << 'EOF'
         tell application "FaceTime" to activate
         delay 1
         tell application "System Events"
@@ -112,7 +117,7 @@ EOF
 make_landscape() {
 
     # Make landscape by rotating once
-    osascript - << EOF
+    osascript - << 'EOF'
         tell application "FaceTime" to activate
         delay 1
         tell application "System Events"
@@ -124,7 +129,7 @@ EOF
 
 
 is_in_call() {
-    status=`osascript - << EOF
+    status=$(osascript - << 'EOF'
         tell application "FaceTime" to activate
         tell application "System Events" to tell process "FaceTime"
             if name of front window contains "with" then
@@ -132,12 +137,11 @@ is_in_call() {
                 copy output to stdout
             end if
         end tell
-EOF`
-    if [ "$status" = "running" ]; then
-        return 0 #true
-    else
-        return 1 #false
+EOF)
+    if [[ "$status" = "running" ]] ; then
+        return 0
     fi
+    return 1
 }
 
 
@@ -145,7 +149,7 @@ loop_while_in_call() {
     while true; do
         sleep 20
         is_in_call || break
-        is_portal_open_now || break
+        its_portal_opening_hours || break
         make_fullscreen
     done
 }
@@ -166,9 +170,9 @@ setup_auto_accept() {
     #
     # Auto accept calls from remote 
     #
-    auto_accept=`defaults read com.apple.FaceTime AutoAcceptInvitesFrom 2>/dev/null`
+    auto_accept=$(defaults read com.apple.FaceTime AutoAcceptInvitesFrom 2>/dev/null)
 
-    if [[ ! $auto_accept == *${CALLER_FACETIME_ID}* ]] ; then
+    if [[ $auto_accept != *${CALLER_FACETIME_ID}* ]] ; then
         log "Adding ${CALLER_FACETIME_ID} to FaceTime auto accept list"
         defaults write com.apple.FaceTime AutoAcceptInvites -bool YES
         defaults write com.apple.FaceTime AutoAcceptInvitesFrom -array-add "$CALLER_FACETIME_ID"
@@ -185,7 +189,7 @@ set_volume() {
 #
 last_played=
 play_sound() {
-    if is_portal_open_now; then
+    if its_portal_opening_hours; then
         if [ -f "${SCRIPT_DIR_NAME}/portal_open.wav" -a "$last_played" != "open" ]; then
             afplay "${SCRIPT_DIR_NAME}/portal_open.wav"
             last_played="open"
@@ -202,7 +206,7 @@ start_caller() {
     INITIAL_DELAY=20
     retry_delay=${INITIAL_DELAY}
     while true; do
-        if is_portal_open_now; then
+        if its_portal_opening_hours; then
             exit_facetime
             log "Starting call to ${RECEIVER_FACETIME_ID}."
             set_volume 1 
@@ -220,10 +224,10 @@ start_caller() {
                 fi
             done
             loop_while_in_call
-            if is_portal_open_now; then
+            if its_portal_opening_hours; then
                 log "Called ended. Retrying in ${retry_delay} seconds..."
                 sleep "$retry_delay"
-                retry_delay=`expr $retry_delay '*' 2`
+                retry_delay=$(expr $retry_delay '*' 2)
             else
                 exit_facetime
                 play_sound
@@ -241,7 +245,7 @@ start_caller() {
 start_receiver() {
     setup_auto_accept
     while true; do
-        if is_portal_open_now; then
+        if its_portal_opening_hours; then
             log "Waiting for call from ${CALLER_FACETIME_ID} to open portal."
             exit_facetime
             open_facetime
@@ -256,7 +260,7 @@ start_receiver() {
                 fi 
             done
             loop_while_in_call
-            if is_portal_open_now; then
+            if its_portal_opening_hours; then
                 log "Call not in progress."
             else 
                 exit_facetime
@@ -276,7 +280,7 @@ start_receiver() {
 #
 
 role=caller
-hostname=`hostname`
+hostname=$(hostname)
 if [[ "${hostname}" == *${CALLER_HOSTNAME}* ]]; then
     role=caller
 fi
@@ -292,12 +296,15 @@ case $1 in
     receiver)
         role=receiver
         ;;
+    *) usage
 esac
 
 # Arg[2] override for times (for testing)
-if [ "${2}" = "alltime" ]; then
+if [ "$2" = "alltime" ]; then
     OPEN_UTC_HOURS="00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23"
     OPEN_UTC_DAYS_OF_WEEK="0 1 2 3 4 5 6"
+elif [[ -n "$2" ]] ; then
+  usage
 fi
 
 if [ "${role}" = "caller" ]; then
