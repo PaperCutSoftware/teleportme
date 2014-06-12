@@ -63,6 +63,18 @@ a:hover {
   color: #2268b2;
 }
 
+strong {
+    font-weight: bold;
+}
+
+em {
+    font-style: italic;
+}
+
+small {
+    font-size: 0.75em;
+}
+
 header {
   padding-top: 40px;
   padding-bottom: 40px;
@@ -225,7 +237,7 @@ form {
 /* GENERAL ELEMENT TYPE STYLES */
 
 #main-content h1 {
-  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+  font-family: 'Helvetica Neue', Helvetica, Arial, serif; 
   font-size: 2.8em;
   letter-spacing: -1px;
   color: #474747;
@@ -235,11 +247,11 @@ form {
   content: "/";
   color: #9ddcff;
   padding-right: 0.3em;
-  margin-left: -0.9em;
+  margin-left: -0.5em;
 }
 
 #main-content h2 {
-  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+  font-family: 'Helvetica Neue', Helvetica, Arial, serif; 
   font-size: 22px;
   font-weight: bold;
   margin-bottom: 8px;
@@ -249,11 +261,11 @@ form {
   content: "//";
   color: #9ddcff;
   padding-right: 0.3em;
-  margin-left: -1.5em;
+  margin-left: -1.0em;
 }
 
 #main-content h3 {
-  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+  font-family: 'Helvetica Neue', Helvetica, Arial, serif; 
   font-size: 18px;
   font-weight: bold;
   margin-top: 24px;
@@ -265,11 +277,11 @@ form {
   content: "///";
   color: #9ddcff;
   padding-right: 0.3em;
-  margin-left: -2em;
+  margin-left: -1.5em;
 }
 
 #main-content h4 {
-  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+  font-family: 'Helvetica Neue', Helvetica, Arial, serif; 
   font-size: 15px;
   font-weight: bold;
   color: #474747;
@@ -279,11 +291,11 @@ h4:before {
   content: "////";
   color: #9ddcff;
   padding-right: 0.3em;
-  margin-left: -2.8em;
+  margin-left: -1.8em;
 }
 
 #main-content h5 {
-  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+  font-family: 'Helvetica Neue', Helvetica, Arial, serif; 
   font-size: 14px;
   color: #474747;
 } 
@@ -295,7 +307,7 @@ h5:before {
 }
 
 #main-content h6 {
-  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+  font-family: 'Helvetica Neue', Helvetica, Arial, serif; 
   font-size: .8em;
   color: #474747;
 } 
