@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# Telectroscope - An automated FaceTime portal.
-# https://github.com/PaperCutSoftware/telectroscope
+# Telectroscope - An automated always-on FaceTime portal.
+# http://papercutsoftware.github.io/telectroscope/
 #
 # Copyright (c) 2014, PaperCut Software http://www.papercut.com/
 # Licenced under the MIT - see project's LICENCE file.
