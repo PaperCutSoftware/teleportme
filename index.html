@@ -13,15 +13,15 @@
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <title>Telectroscope - an automated FaceTime Portal by PaperCut Software</title>
+    <title>Teleportme - an automated always-on FaceTime powered Portal</title>
   </head>
 
   <body>
     <header>
       <div class="inner">
-        <h1>Telectroscope</h1>
-        <h2>Connect people through a portal<br />  Transport your inter-offices!</h2>
-        <a href="https://github.com/PaperCutSoftware/telectroscope" class="button"><small>View project on</small>GitHub</a>
+        <h1>Teleportme</h1>
+        <h2>Connect people through a portal.<br />  Transport your inter-offices!</h2>
+        <a href="https://github.com/PaperCutSoftware/teleportme" class="button"><small>View project on</small>GitHub</a>
       </div>
     </header>
 
@@ -29,16 +29,16 @@
       <div class="inner clearfix">
         <section id="main-content">
 
-        <p>Telectroscope is an <strong>open source project</strong> which aims to connect people through an <strong>automated and always-on</strong> portal - Transport your inter-offices, meeting room, or common area communication across large distances with a <a href="http://www.apple.com/au/mac/facetime/">FaceTime</a> powered portal.</p>
+        <p>Teleportme is an <strong>open source project</strong> which aims to connect people through an <strong>automated and always-on</strong> portal - Transport your inter-offices, meeting room, or common area communication across large distances with a <a href="http://www.apple.com/au/mac/facetime/">FaceTime</a> powered portal.</p>
 
 <h3>
-<a name="what-does-it-do-and-why-would-i-want-to-do-it" class="anchor" href="#what-does-it-do-and-why-would-i-want-to-do-it"><span class="octicon octicon-link"></span></a>Why use Telectroscope?</h3>
+<a name="what-does-it-do-and-why-would-i-want-to-do-it" class="anchor" href="#what-does-it-do-and-why-would-i-want-to-do-it"><span class="octicon octicon-link"></span></a>Why use Teleportme?</h3>
 
 
-<p>The Telectroscope portal is a fantastic way of keeping remote offices linked. Like a modern-day global water-cooler, but without the water... <strong>and just cooler!</strong></p>
+<p>The Teleportme portal is a fantastic way of keeping remote offices linked. Like a modern-day global water-cooler, but without the water... <strong>and just cooler!</strong></p>
 
 <img alt="PaperCut Dev team in Melbourne talking to the team in Portland" style="float:right;width:300px;height:200px;margin-left:10px;" src="images/papercut-portal-1.jpg " />
-<p>Skype, hangouts, or facetime calls are great in regular usage too, but people tend to think 'oh the person is too busy, I won't bother them'. With Telectroscope set up, it's a lot more relaxed and allows people to wander past the portal (if you set it up in a well-trafficked area) and catch up with people at the other site who are also near.</p>
+<p>Skype, hangouts, or facetime calls are great in regular usage too, but people tend to think 'oh the person is too busy, I won't bother them'. With Teleportme set up, it's a lot more relaxed and allows people to wander past the portal (if you set it up in a well-trafficked area) and catch up with people at the other site who are also near.</p>
 
 <p>With the offices here at <a href="http://www.papercut.com/">PaperCut</a> we've noticed a definite positive change with the regions chatting between each other, and more people from different teams chatting to people in other teams. "Cross-collaboration" - in presentation-speak.</p>
 
@@ -97,11 +97,11 @@
 <a name="step-3-setup-the-script" class="anchor" href="#step-3-setup-the-script"><span class="octicon octicon-link"></span></a>Step 3: Setup the script</h4>
 
 <ul>
-<li>Copy the script <code>telectroscope.command</code> onto the Desktop (<a href="https://github.com/PaperCutSoftware/telectroscope/zipball/master">download here</a>)
+<li>Copy the script <code>teleportme.command</code> onto the Desktop (<a href="https://github.com/PaperCutSoftware/teleportme/zipball/master">download here</a>)
 </li>
-<li>Ensure the script has execute permissions (e.g. <code>chmod +x ~/Desktop/telectroscope.command</code> )</li>
-<li>Add the <code>telectroscope.command</code> to the login startup items for the account: <code>System Preferences -&gt; Users &amp; Groups -&gt; Login Items</code>, then add <code>~/Desktop/telectroscope.command</code></li>
-<li>Open <code>telectroscope.command</code> in a text editor, and modify the <em>Config Section</em> of the script. Change:</li>
+<li>Ensure the script has execute permissions (e.g. <code>chmod +x ~/Desktop/teleportme.command</code> )</li>
+<li>Add the <code>teleportme.command</code> to the login startup items for the account: <code>System Preferences -&gt; Users &amp; Groups -&gt; Login Items</code>, then add <code>~/Desktop/teleportme.command</code></li>
+<li>Open <code>teleportme.command</code> in a text editor, and modify the <em>Config Section</em> of the script. Change:</li>
 </ul><pre><code>CALLER_FACETIME_ID
 CALLER_HOSTNAME 
 RECEIVER_FACETIME_ID 
@@ -140,7 +140,7 @@ OPEN_UTC_DAYS_OF_WEEK
 <br>
 <strong>Manual Management/Startup</strong>
 <ul>
-  <li>If you need to temporarily turn off the portal, simply close the Terminal window.  When finished, open it again by double clicking on <code>telectroscope.command</code> on the Desktop.</li>
+  <li>If you need to temporarily turn off the portal, simply close the Terminal window.  When finished, open it again by double clicking on <code>teleportme.command</code> on the Desktop.</li>
 </ul><h3>
 <a name="looks-good-so-far---are-there-any-cool-features" class="anchor" href="#looks-good-so-far---are-there-any-cool-features"><span class="octicon octicon-link"></span></a>Looks good so far - are there any cool features?</h3>
 
@@ -157,7 +157,7 @@ OPEN_UTC_DAYS_OF_WEEK
 <a name="what-are-the-details-of-the-script-workings" class="anchor" href="#what-are-the-details-of-the-script-workings"><span class="octicon octicon-link"></span></a>Technical - How it works:</h3>
 
 <p>
-On startup telectroscope.command is automatically started and permanently runs in a Terminal Window.  One system is the 'called' and the other the 'receiver'.
+On startup teleportme.command is automatically started and permanently runs in a Terminal Window.  One system is the 'called' and the other the 'receiver'.
 </p>
 
 <p><em>On the Receiver:</em></p>
@@ -197,9 +197,11 @@ On startup telectroscope.command is automatically started and permanently runs i
   <li><strong>Portal open sound</strong> - create or copy a .wav file to the same directory as the script, and name it: <code>portal_open.wav</code></li>
   <li><strong>Portal close sound</strong> - create or copy a .wav file to the same directory as the script, and name it: <code>portal_close.wav</code></li>
 </ul><h3>
-<a name="where-does-the-telectroscope-name-come-from" class="anchor" href="#where-does-the-telectroscope-name-come-from"><span class="octicon octicon-link"></span></a>Where does the 'Telectroscope' name come from?</h3>
+<a name="where-does-the-teleportme-name-come-from" class="anchor" href="#where-does-the-teleportme-name-come-from"><span class="octicon octicon-link"></span></a>Where does the 'Teleportme' name come from?</h3>
 
-<p>It's an old-school 19th century term (see <a href="http://en.wikipedia.org/wiki/Telectroscope">Wikipedia</a>) applying to 'science-based systems of distant seeing'. It's also a nod to a more <a href="http://www.artichoke.uk.com/events/the_telectroscope/">modern day art project</a>, allowing people in New York and London to see each other, through a steam-punk-esque 'tube'... </p>
+<p><strong>Teleportme</strong> was kindly suggested by Paul Saint George, the artist behind the <a href="http://www.paulstgeorge.com/telectroscope/">Telectroscope project</a>.  The Telectorscope is a modern day art project, where people in New York and London see each other through a steam-punk-esque 'tube'...
+
+In Paul's words:  <em>"I am sure you know the theory that all tech was invented in Eagle comic and Star Trek (The Original Series), so why not go straight for the teleportation reference? It's an active verb (teleport) and a personal pronoun (me), rather than a noun describing the object."</em>
 
 <h3>
 <a name="the-fine-print" class="anchor" href="#the-fine-print"><span class="octicon octicon-link"></span></a>The fine print...</h3>
@@ -209,16 +211,16 @@ On startup telectroscope.command is automatically started and permanently runs i
         </section>
 
         <aside id="sidebar">
-          <a href="https://github.com/PaperCutSoftware/telectroscope/zipball/master" class="button">
+          <a href="https://github.com/PaperCutSoftware/teleportme/zipball/master" class="button">
             <small>Download</small>
             .zip file
           </a>
-          <a href="https://github.com/PaperCutSoftware/telectroscope/tarball/master" class="button">
+          <a href="https://github.com/PaperCutSoftware/teleportme/tarball/master" class="button">
             <small>Download</small>
             .tar.gz file
           </a>
 
-          <p class="repo-owner"><a href="https://github.com/PaperCutSoftware/telectroscope"></a>Maintained by <a href="https://github.com/PaperCutSoftware">PaperCut Software</a>.</p>
+          <p class="repo-owner"><a href="https://github.com/PaperCutSoftware/teleportme"></a>Maintained by <a href="https://github.com/PaperCutSoftware">PaperCut Software</a>.</p>
 
         </aside>
       </div>
