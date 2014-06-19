@@ -288,23 +288,28 @@ if [[ "${hostname}" == *${RECEIVER_HOSTNAME}* ]]; then
     role=receiver
 fi
 
-# Arg[1] override for role (for testing)
-case $1 in 
-    caller)
-        role=caller
-        ;;
-    receiver)
-        role=receiver
-        ;;
-    *) usage
-esac
+if [[ $# >  0 ]] ; then
+  # Arg[1] override for role (for testing)
+  case "$1" in 
+      caller)
+          role=caller
+          ;;
+      receiver)
+          role=receiver
+          ;;
+      *) usage
+  esac
+fi
 
+if [[ $# >  1 ]] ; then
 # Arg[2] override for times (for testing)
-if [ "$2" = "alltime" ]; then
-    OPEN_UTC_HOURS="00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23"
-    OPEN_UTC_DAYS_OF_WEEK="0 1 2 3 4 5 6"
-elif [[ -n "$2" ]] ; then
-  usage
+  case "$2" in
+    alltime)
+      OPEN_UTC_HOURS="00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23"
+      OPEN_UTC_DAYS_OF_WEEK="0 1 2 3 4 5 6"
+      ;;
+    *) usage
+  esac
 fi
 
 if [ "${role}" = "caller" ]; then
