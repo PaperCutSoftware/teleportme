@@ -7,16 +7,17 @@
 # Licenced under the MIT - see project's LICENCE file.
 #
 # Authors: 
-#   Chris Dance - https://github.com/codedance/
-#   Tim Grimshaw - https://github.com/squashedbeetle/
+#   Chris Dance   - https://github.com/codedance/
+#   Tim Grimshaw  - https://github.com/squashedbeetle/
+#   Alec Clews    - https://github.com/alecthegeek/
 #
 # Decription: 
 #   This script automates FaceTime calls between two endpoints
 #   (e.g. offices) during selected time of the day.
 #
 # Important: Make sure that the terminal program you use
-#     e.g. iTerm2, has permission to control your computer
-#     under Security and Privacy preferences
+#     e.g. Terminal, has permission to control your computer
+#     under Security and Privacy preferences.
 #
 ############################################################
 
@@ -60,7 +61,7 @@ log() {
 }
 
 
-its_portal_opening_hours() {
+is_portal_opening_hours() {
     day_of_week=$(date -u '+%w')
     hour_of_day=$(date -u '+%H')
 
@@ -114,6 +115,7 @@ make_fullscreen() {
 EOF
 }
 
+
 make_landscape() {
 
     # Make landscape by rotating once
@@ -149,7 +151,7 @@ loop_while_in_call() {
     while true; do
         sleep 20
         is_in_call || break
-        its_portal_opening_hours || break
+        is_portal_opening_hours || break
         make_fullscreen
     done
 }
@@ -179,6 +181,7 @@ setup_auto_accept() {
     fi
 }
 
+
 set_volume() {
     volume=$1
     osascript -e "set Volume ${volume}"
@@ -189,7 +192,7 @@ set_volume() {
 #
 last_played=
 play_sound() {
-    if its_portal_opening_hours; then
+    if is_portal_opening_hours; then
         if [ -f "${SCRIPT_DIR_NAME}/portal_open.wav" -a "$last_played" != "open" ]; then
             afplay "${SCRIPT_DIR_NAME}/portal_open.wav"
             last_played="open"
@@ -202,11 +205,12 @@ play_sound() {
     fi
 }
 
+
 start_caller() {
     INITIAL_DELAY=20
     retry_delay=${INITIAL_DELAY}
     while true; do
-        if its_portal_opening_hours; then
+        if is_portal_opening_hours; then
             exit_facetime
             log "Starting call to ${RECEIVER_FACETIME_ID}."
             set_volume 1 
@@ -224,7 +228,7 @@ start_caller() {
                 fi
             done
             loop_while_in_call
-            if its_portal_opening_hours; then
+            if is_portal_opening_hours; then
                 log "Called ended. Retrying in ${retry_delay} seconds..."
                 sleep "$retry_delay"
                 retry_delay=$(expr $retry_delay '*' 2)
@@ -245,7 +249,7 @@ start_caller() {
 start_receiver() {
     setup_auto_accept
     while true; do
-        if its_portal_opening_hours; then
+        if is_portal_opening_hours; then
             log "Waiting for call from ${CALLER_FACETIME_ID} to open portal."
             play_sound
             exit_facetime
@@ -260,7 +264,7 @@ start_receiver() {
                 fi 
             done
             loop_while_in_call
-            if its_portal_opening_hours; then
+            if is_portal_opening_hours; then
                 log "Call not in progress."
             else 
                 exit_facetime
@@ -289,27 +293,27 @@ if [[ "${hostname}" == *${RECEIVER_HOSTNAME}* ]]; then
 fi
 
 if [[ $# >  0 ]] ; then
-  # Arg[1] override for role (for testing)
-  case "$1" in 
-      caller)
+    # Arg[1] override for role (for testing)
+    case "$1" in 
+        caller)
           role=caller
           ;;
-      receiver)
+        receiver)
           role=receiver
           ;;
-      *) usage
-  esac
+        *) usage
+    esac
 fi
 
 if [[ $# >  1 ]] ; then
-# Arg[2] override for times (for testing)
-  case "$2" in
-    alltime)
-      OPEN_UTC_HOURS="00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23"
-      OPEN_UTC_DAYS_OF_WEEK="0 1 2 3 4 5 6"
-      ;;
-    *) usage
-  esac
+    # Arg[2] override for times (for testing)
+    case "$2" in
+        alltime)
+          OPEN_UTC_HOURS="00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23"
+          OPEN_UTC_DAYS_OF_WEEK="0 1 2 3 4 5 6"
+          ;;
+        *) usage
+    esac
 fi
 
 if [ "${role}" = "caller" ]; then
