@@ -130,6 +130,14 @@ EOF
 }
 
 
+hide_menubar() {
+    # Hack - move the mouse down a bit
+    if test -x "${SCRIPT_DIR_NAME}/cliclick"; then
+        ${SCRIPT_DIR_NAME}/cliclick "m:-200,200"
+    fi
+}
+
+
 is_in_call() {
     status=$(osascript - << 'EOF'
         tell application "FaceTime" to activate
@@ -222,6 +230,7 @@ start_caller() {
                     set_volume 10
                     make_fullscreen
                     make_landscape # This should also switch the receiver
+                    hide_menubar
                     play_sound
                     retry_delay=${INITIAL_DELAY}
                     break 1
@@ -231,7 +240,7 @@ start_caller() {
             if is_portal_opening_hours; then
                 log "Called ended. Retrying in ${retry_delay} seconds..."
                 sleep "$retry_delay"
-                retry_delay=$(expr $retry_delay '*' 2)
+                retry_delay=$(expr $retry_delay '+' 10)
             else
                 exit_facetime
                 play_sound
@@ -260,6 +269,7 @@ start_receiver() {
                 if is_in_call; then
                     log "Call started. Making full screen."
                     make_fullscreen
+                    hide_menubar
                     break 1
                 fi 
             done
