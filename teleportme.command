@@ -108,7 +108,7 @@ make_fullscreen() {
         end tell
         if not _fullscreen then
             tell application "System Events"
-                keystroke "F" using {command down, shift down}
+                keystroke "f" using {command down, control down}
             end tell
             delay 3
         end if
