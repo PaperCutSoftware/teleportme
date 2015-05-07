@@ -213,6 +213,13 @@ play_sound() {
     fi
 }
 
+wait_for_network() {
+    until ping -c 1 google.com >& /dev/null
+    do
+        echo Waiting for network to come up...
+        sleep 1
+    done
+}
 
 start_caller() {
     INITIAL_DELAY=20
@@ -325,6 +332,9 @@ if [[ $# >  1 ]] ; then
         *) usage
     esac
 fi
+
+# Wait for network connection befor starting FaceTime.
+wait_for_network
 
 if [ "${role}" = "caller" ]; then
     start_caller
