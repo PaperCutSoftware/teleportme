@@ -339,7 +339,7 @@ if [[ $# >  1 ]] ; then
     esac
 fi
 
-# Wait for network connection befor starting FaceTime.
+# Wait for network connection before starting FaceTime.
 wait_for_network
 
 if [ "${role}" = "caller" ]; then
