@@ -40,6 +40,8 @@ RECEIVER_HOSTNAME=portal-endpoint-b
 # Portal open hours in UTC in 24 time.
 # This is specified as a list of hours that the portal will be open.
 # So "00 23" will mean the portal is open from 23:00 to 00:59 UTC
+# NOTE: If using e.g. TextEdit to edit the hours and days, make sure that the ""s around the times do not convert to smart quotes.
+# e.g. TextEdit -> Preferences -> Options -> uncheck Smart Quotes
 OPEN_UTC_HOURS="22 23"           # values are from 00 to 23
 OPEN_UTC_DAYS_OF_WEEK="1 2 3 4 5"   # 0 (Sun) to 6 (Sat)
 
